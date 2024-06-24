@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFrontAI", "SharpFrontA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFrontTest", "SharpFrontTest\SharpFrontTest.csproj", "{A54DACBE-9AD7-41F1-957E-732AEA454289}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFront", "SharpFront\SharpFront.csproj", "{4BE23704-E1A6-4D33-94B7-F207472EB303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A54DACBE-9AD7-41F1-957E-732AEA454289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54DACBE-9AD7-41F1-957E-732AEA454289}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54DACBE-9AD7-41F1-957E-732AEA454289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE23704-E1A6-4D33-94B7-F207472EB303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE23704-E1A6-4D33-94B7-F207472EB303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE23704-E1A6-4D33-94B7-F207472EB303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE23704-E1A6-4D33-94B7-F207472EB303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
