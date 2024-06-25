@@ -1,0 +1,48 @@
+const areas = ['header', 'body', 'sidebar', 'footer'];
+
+for(const area of areas){
+    document.getElementById(area).addEventListener('click', function(event){
+        if (!event.target.closest('#dynamicInput')) {
+            const inputGroup = createInputField(area);
+            const existingInput = document.getElementById('dynamicInput');
+            if (existingInput) {
+                existingInput.remove();
+            }
+            this.appendChild(inputGroup);
+        }
+    }, { capture: true }); // Add the capture option to the event listener
+}
+
+function createInputField(area){
+    const inputGroup = document.createElement('div');
+    inputGroup.classList.add('input-group');
+    inputGroup.id = 'dynamicInput';
+
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.classList.add('form-control','border-3','border-white');
+    inputField.placeholder = "Enter your prompt...";
+    inputField.setAttribute('aria-label', "Prompt input field");
+
+    const saveButton = document.createElement('button');
+    saveButton.classList.add('btn', 'btn-outline-secondary','text-white','border-3','border-white');
+    saveButton.type = 'button';
+    saveButton.textContent = 'Save';
+
+    inputGroup.appendChild(inputField);
+    inputGroup.appendChild(saveButton);
+    inputField.focus();
+
+    saveButton.addEventListener('click', function() {
+        const prompt = inputField.value;
+        console.log(prompt);
+        const existingInput = document.getElementById('dynamicInput');
+        if (existingInput) {
+            existingInput.remove();
+            const activeDiv = document.getElementById(area)
+            activeDiv.style.backgroundColor = '#9c9c9c';
+        }
+    });
+
+    return inputGroup;
+}

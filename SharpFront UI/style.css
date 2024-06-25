@@ -1,0 +1,28 @@
+.header, .footer {
+    height: 150px; /* Adjust as needed */
+    background-color: black; /* Or your preferred color */
+    border: 0.1px solid white; 
+    border-radius: 15px;
+    transition: background-color 2s ease-out 50ms;
+  }
+  
+  .body, .sidebar{
+    height: 400px; /* Adjust as needed */
+    background-color: black;
+    border: 0.1px solid white;
+    border-radius: 15px;
+    transition: background-color 2s ease-out 100ms
+  }
+
+  .header:hover, .footer:hover, .body:hover, .sidebar:hover {
+    background-color: #9c9c9c;
+    cursor:pointer;
+  }
+  
+  .input-field {
+    display: none; /* Initially hidden */
+  }
+
+  .div:hover{
+    background-color: #353131;
+  }
