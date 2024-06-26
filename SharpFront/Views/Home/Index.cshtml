@@ -1,11 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<div class="container-fluid">
+    <div class="row header" id="header">
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <div class="col-md-9 body" id="body">
+        </div>
+        <div class="col-md-3 sidebar" id="sidebar">
+        </div>
+    </div>
+
+    <div class="row footer" id="footer">
+
+    </div>
+    <br />
     <form asp-controller="Home" asp-action="Result" method="post">
-        <button type="submit" class="btn btn-primary">Get Result</button>
+        <div class="justify-content-center col-12 text-center m-0 p-0">
+            <button type="submit" class="btn btn-dark text-center">Generate</button>
+        </div>
     </form>
+
+    @*TODO:
+        In site.js, all prompt inputs should be passed to controller function Result() as parameters when user clicks on "Generate" button.
+        The controller function will use these prompts to generate source code then pass it to view.
+    *@
 </div>
