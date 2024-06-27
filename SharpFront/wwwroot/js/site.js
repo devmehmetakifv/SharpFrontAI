@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 const areas = ['header', 'body', 'sidebar', 'footer'];
+const prompts = new Map();
 
 for (const area of areas) {
     document.getElementById(area).addEventListener('click', function (event) {
@@ -39,7 +40,7 @@ function createInputField(area) {
 
     saveButton.addEventListener('click', function () {
         const prompt = inputField.value;
-        console.log(prompt);
+        prompts.set(area, prompt);
         const existingInput = document.getElementById('dynamicInput');
         if (existingInput) {
             existingInput.remove();
@@ -50,3 +51,15 @@ function createInputField(area) {
 
     return inputGroup;
 }
+
+function generate() {
+    //ERROR HERE. NEED FIX!
+    const promptData = JSON.stringify(Object.fromEntries(prompts));
+    $.ajax({
+        url: '/Home/ReceivePrompts',
+        type: "POST",
+        data: { promptModel: promptData },
+        contentType: "application/json"
+    });
+}
+

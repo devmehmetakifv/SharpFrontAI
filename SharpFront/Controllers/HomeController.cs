@@ -44,5 +44,25 @@ namespace SharpFront.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [HttpPost]
+        public IActionResult ReceivePrompts([FromBody] PromptModel promptModel)
+        {
+            //ERROR HERE. NEED FIX!
+            foreach (var prompt in promptModel.Prompts)
+            {
+                Console.WriteLine($"Prompts: {prompt.Prompt}");
+            }
+            return View();
+        }
+    }
+    public class PromptModel
+    {
+        public List<PromptItem>? Prompts { get; set; }
+    }
+
+    public class PromptItem
+    {
+        public string? Area { get; set; }
+        public string? Prompt { get; set; }
     }
 }
