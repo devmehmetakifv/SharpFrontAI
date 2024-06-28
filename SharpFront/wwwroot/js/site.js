@@ -7,16 +7,18 @@ const prompts = new Map();
 
 for (const area of areas) {
     document.getElementById(area).addEventListener('click', function (event) {
-        if (!event.target.closest('#dynamicInput')) {
-            const inputGroup = createInputField(area);
-            const existingInput = document.getElementById('dynamicInput');
-            if (existingInput) {
-                existingInput.remove();
-            }
-            this.appendChild(inputGroup);
+        if ((!event.target.closest('#dynamicInput')) && (this.getAttribute('input-created') != 'true')){
+        const inputGroup = createInputField(area);
+        const existingInput = document.getElementById('dynamicInput');
+        if (existingInput) {
+            existingInput.remove();
         }
+        this.appendChild(inputGroup);
+        this.setAttribute('input-created', 'true');
+    }
     }, { capture: true }); // Add the capture option to the event listener
 }
+
 
 function createInputField(area) {
     const inputGroup = document.createElement('div');
@@ -53,13 +55,19 @@ function createInputField(area) {
 }
 
 function generate() {
-    //ERROR HERE. NEED FIX!
-    const promptData = JSON.stringify(Object.fromEntries(prompts));
-    $.ajax({
-        url: '/Home/ReceivePrompts',
+    const formData = new FormData();
+    for (const [area, prompt] of prompts) { // Loop through the map and append each key-value pair to the FormData object
+        formData.append(area, prompt); 
+    }
+    $.ajax({ // Send the FormData object to the server, specifically to the ReceivePrompts action method in the Home controller
+        url: "/Home/ReceivePrompts",
         type: "POST",
-        data: { promptModel: promptData },
-        contentType: "application/json"
-    });
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            window.location.href = result.redirectToUrl;
+        }
+    })
 }
 

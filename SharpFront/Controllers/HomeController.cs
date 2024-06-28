@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SharpFront.Models;
 using System.Diagnostics;
 
@@ -16,23 +17,34 @@ namespace SharpFront.Controllers
         public IActionResult Index()
         {
             return View();
-        }
+			//GeminiAIClass myAI = new GeminiAIClass
+			//{
+			//    Model = "gemini-1.5-flash",
+			//    FixedPrompt = $"",
+			//};
 
-        public async Task<IActionResult> Result()
+			//await myAI.CodeAsync(new Prompt($"Create a header section with a logo and a navigation bar. Logo should be aligned to left and navigation bar should be aligned to right. Navigation bar should contain the followings: Home, Privacy Policy, Social Media, My Posts, Projects, Contact Me. {myAI.FixedPrompt}"));
+		}
+        public IActionResult Result()
         {
-            GeminiAIClass myAI = new GeminiAIClass
-            {
-                Model = "gemini-1.5-flash",
-                FixedPrompt = $"",
-            };
-
-            await myAI.CodeAsync(new Prompt($"Create a header section with a logo and a navigation bar. Logo should be aligned to left and navigation bar should be aligned to right. Navigation bar should contain the followings: Home, Privacy Policy, Social Media, My Posts, Projects, Contact Me. {myAI.FixedPrompt}"));
-
-
-
-
-            return View();
-        }
+			Dictionary<string, string> areaPromptDictionary = null; // Create a dictionary to store the area prompts
+			if (TempData["AreaPrompts"] != null) // Check if the TempData contains the area prompts
+			{
+				areaPromptDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(TempData["AreaPrompts"].ToString()); // Retrieve the area prompts from TempData
+			}
+			return View(areaPromptDictionary); // Return the view with the area prompts
+		}
+        [HttpPost]
+        public IActionResult ReceivePrompts(IFormCollection form)
+        {
+            Dictionary<string, string> areaPromptDictionary = new Dictionary<string, string>(); // Create a dictionary to store the area prompts
+            foreach (var key in form.Keys)
+			{
+				areaPromptDictionary.Add(key, form[key]); // Add the area prompt to the dictionary
+			}
+			TempData["AreaPrompts"] = JsonConvert.SerializeObject(areaPromptDictionary); // Store the dictionary in TempData
+			return Json(new { redirectToUrl = Url.Action("Result") }); // Redirect to the Result action
+		}
 
         public IActionResult Privacy()
         {
@@ -44,25 +56,5 @@ namespace SharpFront.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        [HttpPost]
-        public IActionResult ReceivePrompts([FromBody] PromptModel promptModel)
-        {
-            //ERROR HERE. NEED FIX!
-            foreach (var prompt in promptModel.Prompts)
-            {
-                Console.WriteLine($"Prompts: {prompt.Prompt}");
-            }
-            return View();
-        }
-    }
-    public class PromptModel
-    {
-        public List<PromptItem>? Prompts { get; set; }
-    }
-
-    public class PromptItem
-    {
-        public string? Area { get; set; }
-        public string? Prompt { get; set; }
     }
 }
