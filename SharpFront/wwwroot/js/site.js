@@ -14,7 +14,6 @@ for (const area of areas) {
             existingInput.remove();
         }
         this.appendChild(inputGroup);
-        this.setAttribute('input-created', 'true');
     }
     }, { capture: true }); // Add the capture option to the event listener
 }
@@ -48,6 +47,7 @@ function createInputField(area) {
             existingInput.remove();
             const activeDiv = document.getElementById(area)
             activeDiv.style.backgroundColor = '#9c9c9c';
+            this.setAttribute('input-created', 'true');
         }
     });
 
