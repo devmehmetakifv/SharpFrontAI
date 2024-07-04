@@ -56,10 +56,10 @@ function createInputField(area) {
 
 function generate() {
     const formData = new FormData();
-    for (const [area, prompt] of prompts) { // Loop through the map and append each key-value pair to the FormData object
-        formData.append(area, prompt); 
+    for (const [area, prompt] of prompts) {
+        formData.append(area, prompt);
     }
-    $.ajax({ // Send the FormData object to the server, specifically to the ReceivePrompts action method in the Home controller
+    $.ajax({
         url: "/Home/ReceivePrompts",
         type: "POST",
         data: formData,
@@ -68,6 +68,8 @@ function generate() {
         success: function (result) {
             window.location.href = result.redirectToUrl;
         }
-    })
+    });
 }
+
+
 

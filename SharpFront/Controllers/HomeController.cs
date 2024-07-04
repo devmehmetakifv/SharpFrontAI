@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SharpFront.Models;
@@ -32,8 +33,17 @@ namespace SharpFront.Controllers
 			{
 				areaPromptDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(TempData["AreaPrompts"].ToString()); // Retrieve the area prompts from TempData
 			}
-			return View(areaPromptDictionary); // Return the view with the area prompts
+            string mainPrompt = $"You are a website builder. Generate a website code according to the descriptions of the entered parts: ";
+            foreach (var key in areaPromptDictionary.Keys)
+            {
+                mainPrompt = mainPrompt + $" for the {key} part: {areaPromptDictionary[key]}";
+            }
+
+
+            ViewBag.mainPrompt = mainPrompt;
+            return View(areaPromptDictionary); // Return the view with the area prompts
 		}
+
         [HttpPost]
         public IActionResult ReceivePrompts(IFormCollection form)
         {
@@ -43,8 +53,33 @@ namespace SharpFront.Controllers
 				areaPromptDictionary.Add(key, form[key]); // Add the area prompt to the dictionary
 			}
 			TempData["AreaPrompts"] = JsonConvert.SerializeObject(areaPromptDictionary); // Store the dictionary in TempData
-			return Json(new { redirectToUrl = Url.Action("Result") }); // Redirect to the Result action
-		}
+
+            
+            
+            return Json(new { redirectToUrl = Url.Action("Result") }); // Redirect to the Result action
+        }
+
+        public async Task<IActionResult> GenerateAIContent(string mainPrompt)
+        {
+            
+
+            GeminiAIClass myAI = new GeminiAIClass
+            {
+                Model = "gemini-1.5-flash",
+                FixedPrompt = mainPrompt,   //fixed prompt gerekmeyebilir
+                SystemPrompt = "You are an AI that generates HTML code for website sections." // Set the system prompt here
+            };
+
+
+            List<PromptResult> promptResults = new List<PromptResult>();
+
+            Prompt aiPrompt = new Prompt(mainPrompt);
+            string result = await myAI.CodeAsync(aiPrompt);
+            ViewBag.result = result;
+
+            return View("GeminiResult", result);
+        }
+
 
         public IActionResult Privacy()
         {

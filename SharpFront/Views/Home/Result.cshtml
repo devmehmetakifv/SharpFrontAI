@@ -1,10 +1,22 @@
-﻿@{
-	@model Dictionary<string, string>;
-}
+﻿@model Dictionary<string, string>
+
 @{
-	foreach (KeyValuePair<string,string> keyValuePair in Model) // Model is a dictionary received from the controller
-	{
-		<p>Area: @keyValuePair.Key</p>
-		<p>Prompt: @keyValuePair.Value</p>
-	}
+    ViewData["Title"] = "Result";
 }
+
+<h2>Area Prompts</h2>
+
+@foreach (KeyValuePair<string, string> keyValuePair in Model)
+{
+    <p>Area: @keyValuePair.Key</p>
+    <p>Prompt: @keyValuePair.Value</p>
+}
+
+
+<hr />
+<p>Test</p>
+<p>main Promtp: @ViewBag.mainPrompt</p>
+<form asp-action="GenerateAIContent" method="post">
+    <input type="hidden" name="mainPrompt" value="@ViewBag.mainPrompt" />
+    <input type="submit" value="Generate AI Content" />
+</form>
