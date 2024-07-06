@@ -64,7 +64,8 @@ namespace SharpFront.Models
         public static string MakePromtp(Dictionary<string, string> prompts)
         {
 
-            string mainPrompt = $"You are a website builder. Generate a website code according to the descriptions of the entered parts, write 'only' code : ";
+            string mainPrompt = $"You are a website builder. Generate a website code according to the descriptions of the entered parts," +
+                $"use bootstrap and make the design beautiful ,write 'only' code : ";
             foreach (var key in prompts.Keys)
             {
                 mainPrompt = mainPrompt + $" for the {key} part: {prompts[key]}";
