@@ -33,12 +33,7 @@ namespace SharpFront.Controllers
 			{
 				areaPromptDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(TempData["AreaPrompts"].ToString()); // Retrieve the area prompts from TempData
 			}
-            string mainPrompt = $"You are a website builder. Generate a website code according to the descriptions of the entered parts: ";
-            foreach (var key in areaPromptDictionary.Keys)
-            {
-                mainPrompt = mainPrompt + $" for the {key} part: {areaPromptDictionary[key]}";
-            }
-
+            string mainPrompt = GeminiAIClass.MakePromtp(areaPromptDictionary);
 
             ViewBag.mainPrompt = mainPrompt;
             return View(areaPromptDictionary); // Return the view with the area prompts
@@ -90,6 +85,11 @@ namespace SharpFront.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult FullView(string content)
+        {
+            return View((object)content);
         }
     }
 }

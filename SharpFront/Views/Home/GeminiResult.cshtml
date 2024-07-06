@@ -6,9 +6,15 @@
 
 <h2>Gemini AI Results</h2>
 
-@Model
+<div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px;">
+    @Html.Raw(Model)
+</div>
 
-<hr />
-<p>Test</p>
-<p>result model: @Model</p>
-<p>result viewbag: @ViewBag.result</p>
+<button id="openInNewTab" class="btn btn-primary">Open in New Tab</button>
+
+<script>
+    document.getElementById('openInNewTab').addEventListener('click', function () {
+        var win = window.open('@Url.Action("FullView", "Home", new { content = Model })', '_blank');
+        win.focus();
+    });
+</script>
