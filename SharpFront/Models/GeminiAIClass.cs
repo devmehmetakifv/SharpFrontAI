@@ -65,7 +65,7 @@ namespace SharpFront.Models
         {
 
             string mainPrompt = $"You are a website builder. Generate a website code according to the descriptions of the entered parts," +
-                $"use bootstrap and make the design beautiful ,write 'only' code : ";
+                $"use bootstrap and make the design beautiful ,write 'only' code, no descriptions or titles etc and just send the code : ";
             foreach (var key in prompts.Keys)
             {
                 mainPrompt = mainPrompt + $" for the {key} part: {prompts[key]}";
